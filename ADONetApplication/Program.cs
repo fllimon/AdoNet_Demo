@@ -12,12 +12,11 @@ namespace ADONetApplication
         {
             ActionKey someAction = ActionKey.NoAction;
             Ui menu = new Ui();
-            UserAction action = new UserAction(); 
-
+            
             do
             {
                 menu.PrintMenu();
-                someAction = menu.GetPressKey(action);
+                someAction = menu.GetPressKey();
             } while (someAction != ActionKey.PressExit);
         }
     }

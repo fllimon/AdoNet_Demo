@@ -12,30 +12,88 @@ namespace ADONetApplication
         {
             Console.WriteLine("=============== MENU ================");
             Console.WriteLine();
-            Console.WriteLine("Нажмите <I> для просмотра информации о игроке");
+            Console.WriteLine($"Нажмите <{DefaultSettings.DEFAULT_CHECK_PLAYER_INFO}> для просмотра информации о игроке");
             Console.WriteLine();
-            Console.WriteLine("Если хотите изменить имя нажмите <N>");
+            Console.WriteLine($"Если хотите изменить имя нажмите <{DefaultSettings.DEFAULT_CHANGE_NAME}>");
             Console.WriteLine();
-            Console.WriteLine("Если хотите изменить фамилию нажмите <F>");
+            Console.WriteLine($"Если хотите изменить фамилию нажмите <{DefaultSettings.DEFAULT_CHANGE_LAST_NAME}>");
             Console.WriteLine();
-            Console.WriteLine("Если хотите изменить почту нажмите <E>");
+            Console.WriteLine($"Если хотите изменить почту нажмите <{DefaultSettings.DEFAULT_CHANGE_EMAIL}>");
             Console.WriteLine();
-            Console.WriteLine("Если хотите удалить персонажа нажмите <D>");
+            Console.WriteLine($"Если хотите удалить персонажа нажмите <{DefaultSettings.DEFAULT_DELETE_PLAYER}>");
             Console.WriteLine();
-            Console.WriteLine("Нажмите <ESC> для выхода из программы");
+            Console.WriteLine($"Нажмите <{DefaultSettings.DEFAULT_EXIT_KEY}> для выхода из программы");
             Console.WriteLine();
             Console.WriteLine("============================================");
         }
 
-        public ActionKey GetPressKey(UserAction action)
+        public ActionKey GetPressKey()
         {
             ActionKey someAction;
             do
             {
-                someAction = action.GetActionKey(Console.ReadKey(true).Key);
+                someAction = GetActionKey(Console.ReadKey(true).Key);
             } while (someAction == 0);
 
             return someAction;
+        }
+
+        private ActionKey GetActionKey(ConsoleKey someKey)
+        {
+            Ui menu = new Ui();
+            RageMPDatabase db = new RageMPDatabase();
+
+            UserController player = new UserController(menu, db);
+            ActionKey pressKey = ActionKey.NoAction;
+
+            switch (someKey)
+            {
+                case DefaultSettings.DEFAULT_EXIT_KEY:
+                    pressKey = ActionKey.PressExit;
+
+                    break;
+                case DefaultSettings.DEFAULT_CHECK_PLAYER_INFO:
+                    pressKey = ActionKey.PressSelectInfo;
+
+                    Console.Clear();
+                    player.GetPlayerInfo();
+
+                    break;
+                case DefaultSettings.DEFAULT_DELETE_PLAYER:
+                    pressKey = ActionKey.PressDeleteAccount;
+
+                    Console.Clear();
+                    player.DeletePlayer();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_LAST_NAME:
+                    pressKey = ActionKey.PressUpdateLastName;
+
+                    Console.Clear();
+                    player.UpdateLastName();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_NAME:
+                    pressKey = ActionKey.PressUpdateName;
+
+                    Console.Clear();
+                    player.UpdateFirstName();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_EMAIL:
+                    pressKey = ActionKey.PressUpdateEmail;
+
+                    Console.Clear();
+                    player.UpdateEmail();
+
+                    break;
+
+
+                default:
+                    break;
+            }
+
+            return pressKey;
         }
 
         public string GetChangeData()
@@ -51,6 +109,17 @@ namespace ADONetApplication
             }
 
             return data;
+        }
+
+        public void PrintPlayer(IEnumerable<Accounts> player)
+        {
+            foreach (var item in player)
+            {
+                Console.WriteLine();
+                Console.Write($" FirstName: {item.FirstName} - LastName: {item.LastName} - Email: {item.Email} ");
+                Console.WriteLine();
+                Console.WriteLine();
+            }
         }
 
         public long GetPlayerId()
@@ -69,7 +138,7 @@ namespace ADONetApplication
                 return 0;
             }
 
-            if ((id < 0))
+            if (id < 0)
             {
                 return -1;
             }

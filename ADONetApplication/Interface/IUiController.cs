@@ -11,5 +11,7 @@ namespace ADONetApplication
         string GetChangeData();
 
         long GetPlayerId();
+
+        void PrintPlayer(IEnumerable<Accounts> player);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ADONetApplication
 {
-    class Bl 
+    class UserController
     {
         #region =======------- PRIVATE DATA -------=========
 
@@ -15,7 +15,7 @@ namespace ADONetApplication
 
         #endregion
 
-        public Bl(Ui menu, Database db)
+        public UserController(IUiController menu, IDbController db)
         {
             _uiController = menu;
             _dbController = db;
@@ -25,7 +25,7 @@ namespace ADONetApplication
         {
             long id = _uiController.GetPlayerId();
 
-            _dbController.GetPlayerInfoById(id);
+            _uiController.PrintPlayer(_dbController.GetPlayerInfoById(id));
         }
 
         public void DeletePlayer()

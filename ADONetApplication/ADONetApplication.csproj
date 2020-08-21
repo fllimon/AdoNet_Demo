@@ -43,15 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bl.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Accounts.cs" />
+    <Compile Include="RageMPDatabase.cs" />
+    <Compile Include="Const\DefaultSettings.cs" />
     <Compile Include="Interface\IDbController.cs" />
     <Compile Include="Interface\IUiController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ui.cs" />
     <Compile Include="Enum\ActionKey.cs" />
-    <Compile Include="UserAction.cs" />
+    <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
