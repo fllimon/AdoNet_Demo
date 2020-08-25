@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ADONetApplication
 {
@@ -12,7 +10,7 @@ namespace ADONetApplication
     {
         #region =====----- PRIVATE DATA -----=====
 
-        private readonly string _connectionString = "Data Source=localhost;Initial Catalog=RageMPDataBase;User ID=Artur;Password=123321";
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         private bool _disposed = false;
         private SqlConnection _connection;
 
@@ -51,6 +49,33 @@ namespace ADONetApplication
             {
                 Console.WriteLine(ex);
                 throw;
+            }
+        }
+
+        public IEnumerable<Cars> GetPlayerCarsBuId(long id)
+        {
+            string sqlCommand = "SELECT OV.EngineNumber, M.ModelCar " +
+                                "FROM OwnerVehicle AS OV " +
+                                "LEFT JOIN Cars AS C ON Ov.EngineNumber = C.EngineNumber " +
+                                "LEFT JOIN Models AS M ON C.Id = M.Id " +
+                                "WHERE (Ov.IdAccounts = @id) ";
+
+            SqlCommand newCommand = _connection.CreateCommand();
+            newCommand.CommandText = sqlCommand;
+
+            SqlParameter idParameter = new SqlParameter("@id", id);
+            AddNewParameters(newCommand, idParameter);
+
+            using (SqlDataReader carsReader = newCommand.ExecuteReader())
+            {
+                while (carsReader.Read())
+                {
+                    yield return new Cars    // ToDo: ВОПРОС????
+                    {
+                        EngineNumber = (int)carsReader[0],
+                        ModelCar = carsReader[1].ToString()
+                    };
+                }
             }
         }
 

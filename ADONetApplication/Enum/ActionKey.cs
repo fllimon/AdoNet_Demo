@@ -15,6 +15,7 @@ namespace ADONetApplication
         PressUpdateLastName,
         PressUpdateEmail,
         PressDeleteAccount,
-        PressSelectInfo
+        PressSelectInfo,
+        PresSelectInfoAboutCars
     }
 }

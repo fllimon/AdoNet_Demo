@@ -14,6 +14,8 @@ namespace ADONetApplication
             Console.WriteLine();
             Console.WriteLine($"Нажмите <{DefaultSettings.DEFAULT_CHECK_PLAYER_INFO}> для просмотра информации о игроке");
             Console.WriteLine();
+            Console.WriteLine($"Нажмите <{DefaultSettings.DEFAULT_CHECK_PLAYER_INFO_ABOUT_CARS}> для просмотра информации о машинах игрока");
+            Console.WriteLine();
             Console.WriteLine($"Если хотите изменить имя нажмите <{DefaultSettings.DEFAULT_CHANGE_NAME}>");
             Console.WriteLine();
             Console.WriteLine($"Если хотите изменить фамилию нажмите <{DefaultSettings.DEFAULT_CHANGE_LAST_NAME}>");
@@ -57,6 +59,13 @@ namespace ADONetApplication
 
                     Console.Clear();
                     player.GetPlayerInfo();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHECK_PLAYER_INFO_ABOUT_CARS:
+                    pressKey = ActionKey.PresSelectInfoAboutCars;
+
+                    Console.Clear();
+                    player.GetPlayerInfoAboutCars();
 
                     break;
                 case DefaultSettings.DEFAULT_DELETE_PLAYER:
@@ -117,6 +126,17 @@ namespace ADONetApplication
             {
                 Console.WriteLine();
                 Console.Write($" FirstName: {item.FirstName} - LastName: {item.LastName} - Email: {item.Email} ");
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+        }
+
+        public void PrintPlayerCars(IEnumerable<Cars> cars)
+        {
+            foreach (var item in cars)
+            {
+                Console.WriteLine();
+                Console.Write($" Engine Number: {item.EngineNumber} - Model Car: {item.ModelCar} ");
                 Console.WriteLine();
                 Console.WriteLine();
             }

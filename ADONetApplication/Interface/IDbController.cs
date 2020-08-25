@@ -12,6 +12,8 @@ namespace ADONetApplication
 
         IEnumerable<Accounts> GetPlayerInfoById(long id);
 
+        IEnumerable<Cars> GetPlayerCarsBuId(long id);
+
         void DeletePlayerById(long id);
 
         void UpdateFirstNameById(long id, string firstName);

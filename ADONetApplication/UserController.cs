@@ -28,6 +28,14 @@ namespace ADONetApplication
             _uiController.PrintPlayer(_dbController.GetPlayerInfoById(id));
         }
 
+        public void GetPlayerInfoAboutCars()
+        {
+            long id = _uiController.GetPlayerId();
+
+            _uiController.PrintPlayer(_dbController.GetPlayerInfoById(id));
+            _uiController.PrintPlayerCars(_dbController.GetPlayerCarsBuId(id));
+        }
+
         public void DeletePlayer()
         {
             long id = _uiController.GetPlayerId();

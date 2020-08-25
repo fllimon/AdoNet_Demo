@@ -14,5 +14,6 @@ namespace ADONetApplication
         public const ConsoleKey DEFAULT_CHANGE_EMAIL = ConsoleKey.E;
         public const ConsoleKey DEFAULT_CHANGE_NAME = ConsoleKey.N;
         public const ConsoleKey DEFAULT_CHECK_PLAYER_INFO = ConsoleKey.I;
+        public const ConsoleKey DEFAULT_CHECK_PLAYER_INFO_ABOUT_CARS = ConsoleKey.C;
     }
 }

@@ -13,5 +13,7 @@ namespace ADONetApplication
         long GetPlayerId();
 
         void PrintPlayer(IEnumerable<Accounts> player);
+
+        void PrintPlayerCars(IEnumerable<Cars> cars);
     }
 }
