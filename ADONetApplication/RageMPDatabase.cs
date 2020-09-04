@@ -6,13 +6,13 @@ using System.Configuration;
 
 namespace ADONetApplication
 {
-    internal sealed class RageMPDatabase : IDisposable, IDbController
+    internal  class RageMPDatabase : IDisposable, IDbController
     {
         #region =====----- PRIVATE DATA -----=====
 
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        private bool _disposed = false;
         private SqlConnection _connection;
+        private bool _disposed = false;
 
         #endregion
 
@@ -79,9 +79,9 @@ namespace ADONetApplication
             }
         }
 
-        public IEnumerable<Accounts> GetPlayerInfoById(long id)
+        public IEnumerable<Accounts> GetPlayerInfoById(long? id = null)
         {
-            string sqlCommand = "SELECT FirstName, LastName, Email " +
+            string sqlCommand = "SELECT FirstName, LastName, Email, Id " +
                                    "FROM Accounts WHERE (Id = @id) AND (IsDeleted = 0)";
 
             SqlCommand newCommand = _connection.CreateCommand();
@@ -95,11 +95,11 @@ namespace ADONetApplication
                 while (accountsReader.Read())
                 {
                     yield return new Accounts
-                    {
-                        Id = id,
+                    {                        
                         FirstName = accountsReader[0].ToString(),
                         LastName = accountsReader[1].ToString(),
-                        Email = accountsReader[2].ToString()
+                        Email = accountsReader[2].ToString(),
+                        Id = (long)accountsReader[3]
                     };
                 }
             }
@@ -198,7 +198,7 @@ namespace ADONetApplication
             {
                 newCommand.Parameters.Add(data[i]);
             }
-        } 
+        }
 
         ~RageMPDatabase()
         {
@@ -208,11 +208,17 @@ namespace ADONetApplication
             }
         }
 
+
         public void Dispose()
         {
-            _connection.Close();    //ToDo: ?? Fix
+            if (_connection.State == System.Data.ConnectionState.Open)
+            {
+                _connection.Dispose();    //ToDo: ?? Fix
+            }
 
             _disposed = true;
+
+            Dispose();
             GC.SuppressFinalize(this);
         }
     }

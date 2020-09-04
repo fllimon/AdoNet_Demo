@@ -11,12 +11,14 @@ namespace ADONetApplication
         static void Main(string[] args)
         {
             ActionKey someAction = ActionKey.NoAction;
-            Ui menu = new Ui();
+            IDbController db = new RageMPDatabase();
+            IUiController menu = new Ui();
+            UserController controller = new UserController(menu, db);
             
             do
             {
                 menu.PrintMenu();
-                someAction = menu.GetPressKey();
+                someAction = controller.GetPressKey();
             } while (someAction != ActionKey.PressExit);
         }
     }

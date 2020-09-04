@@ -15,5 +15,7 @@ namespace ADONetApplication
         void PrintPlayer(IEnumerable<Accounts> player);
 
         void PrintPlayerCars(IEnumerable<Cars> cars);
+
+        void PrintMenu();
     }
 }

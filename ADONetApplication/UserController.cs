@@ -66,5 +66,82 @@ namespace ADONetApplication
 
             _dbController.UpdateEmailById(id, data);
         }
+
+        public ActionKey GetPressKey()
+        {
+            ActionKey someAction;
+            do
+            {
+                someAction = GetActionKey(Console.ReadKey(true).Key);
+            } while (someAction == 0);
+
+            return someAction;
+        }
+
+        private ActionKey GetActionKey(ConsoleKey someKey)
+        {
+            //Ui menu = new Ui();
+            //RageMPDatabase db = new RageMPDatabase();
+
+            //UserController player = new UserController(menu, db);
+
+            ActionKey pressKey = ActionKey.NoAction;
+
+            switch (someKey)
+            {
+                case DefaultSettings.DEFAULT_EXIT_KEY:
+                    pressKey = ActionKey.PressExit;
+
+                    break;
+                case DefaultSettings.DEFAULT_CHECK_PLAYER_INFO:
+                    pressKey = ActionKey.PressSelectInfo;
+
+                    Console.Clear();
+                    GetPlayerInfo();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHECK_PLAYER_INFO_ABOUT_CARS:
+                    pressKey = ActionKey.PresSelectInfoAboutCars;
+
+                    Console.Clear();
+                    GetPlayerInfoAboutCars();
+
+                    break;
+                case DefaultSettings.DEFAULT_DELETE_PLAYER:
+                    pressKey = ActionKey.PressDeleteAccount;
+
+                    Console.Clear();
+                    DeletePlayer();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_LAST_NAME:
+                    pressKey = ActionKey.PressUpdateLastName;
+
+                    Console.Clear();
+                    UpdateLastName();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_NAME:
+                    pressKey = ActionKey.PressUpdateName;
+
+                    Console.Clear();
+                    UpdateFirstName();
+
+                    break;
+                case DefaultSettings.DEFAULT_CHANGE_EMAIL:
+                    pressKey = ActionKey.PressUpdateEmail;
+
+                    Console.Clear();
+                    UpdateEmail();
+
+                    break;
+
+
+                default:
+                    break;
+            }
+
+            return pressKey;
+        }
     }
 }

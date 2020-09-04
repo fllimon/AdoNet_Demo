@@ -10,7 +10,7 @@ namespace ADONetApplication
     {
         void CreateAccounts(string firstName, string lastName, string password, string email);
 
-        IEnumerable<Accounts> GetPlayerInfoById(long id);
+        IEnumerable<Accounts> GetPlayerInfoById(long? id);
 
         IEnumerable<Cars> GetPlayerCarsBuId(long id);
 
